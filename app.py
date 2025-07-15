@@ -42,7 +42,6 @@ HTML_TEMPLATE = """
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # Initialize game if not started
     if "number_to_guess" not in session:
         session["number_to_guess"] = random.randint(1, 100)
         session["attempts"] = 0
@@ -59,13 +58,15 @@ def index():
         else:
             guess = int(guess_input)
             session["attempts"] += 1
-            if guess < session["number_to_guess"]:
-                message = f"Too low! Try again."
-            elif guess > session["number_to_guess"]:
-                message = f"Too high! Try again."
-            else:
+            if guess == session["number_to_guess"]:
                 message = f"🎉 Congratulations! You guessed it in {session['attempts']} attempts."
                 session["guessed"] = True
+            elif abs(guess - session["number_to_guess"]) <= 5:
+                message = "🔥 Very close! Try again."
+            elif guess < session["number_to_guess"]:
+                message = "Too low! Try again."
+            else:
+                message = "Too high! Try again."
 
     attempts_left = session["max_attempts"] - session["attempts"]
 
