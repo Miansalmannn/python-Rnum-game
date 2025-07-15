@@ -3,6 +3,7 @@ import random
 
 app = Flask(__name__)
 app.secret_key = 'any_secret_key_here'  # needed for sessions
+
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@ HTML_TEMPLATE = """
 
         {% if attempts_left > 0 and not guessed %}
         <form method="post" class="space-y-4">
-            <input type="text" name="guess" placeholder="Enter your guess"
+            <input type="text" name="guess" placeholder="Enter your guess💭"
                    class="w-full px-4 py-2 rounded-md border border-gray-600 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                    autofocus required>
             <button type="submit"
@@ -63,10 +64,12 @@ def index():
                 session["guessed"] = True
             elif abs(guess - session["number_to_guess"]) <= 5:
                 message = "🔥 Very close! Try again."
+            elif abs(guess - session["number_to_guess"]) <= 10:
+                message = "💪 Almost there! Try again."
             elif guess < session["number_to_guess"]:
-                message = "Too low! Try again."
+                message = "😶 Too low! Try again."
             else:
-                message = "Too high! Try again."
+                message = "😶 Too high! Try again."
 
     attempts_left = session["max_attempts"] - session["attempts"]
 
