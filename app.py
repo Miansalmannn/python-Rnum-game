@@ -45,7 +45,7 @@ def index():
     if "number_to_guess" not in session:
         session["number_to_guess"] = random.randint(1, 100)
         session["attempts"] = 0
-        session["max_attempts"] = 3
+        session["max_attempts"] = 5
         session["guessed"] = False
 
     message = "I'm thinking of a number between 1 and 100."
